@@ -9,3 +9,9 @@ services:
     volumes: 
       - .:/app
     env_file: server/.env.local
+  mongo:
+    image: mongo:4.4.3-bionic
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password 
