@@ -1,4 +1,3 @@
-import 'colors';
 import mongoose from 'mongoose';
 import { MONGODB_URI, PORT } from './config';
 import { app } from './app';
@@ -10,12 +9,12 @@ mongoose
 		useCreateIndex: true,
 	})
 	.then(() => {
-		console.log(`🌱 Connected to mongodb`.green);
+		console.log(`🌱 Connected to mongodb`);
 	})
 	.catch((err) => {
-		console.log(`❗ Error occurred connecting mongodb: ${err}`.red);
+		console.log(`❗ Error occurred connecting mongodb: ${err}`);
 	});
 
 app.listen(PORT, () => {
-	console.log(`🛫 App is running on port ${PORT}`.blue.bold);
+	console.log(`🛫 App is running on port ${PORT}`);
 });
