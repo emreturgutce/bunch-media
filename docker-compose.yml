@@ -15,3 +15,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: user
       MONGO_INITDB_ROOT_PASSWORD: password 
+  redis:
+    image: redis:6.0.10-alpine
+    restart: on-failure
