@@ -4,7 +4,7 @@ import createHttpError from 'http-errors';
 import { User } from '../models/user';
 import { JWT_SECRET } from '../config';
 
-export async function loginUser(
+export async function loginUserController(
 	req: Request,
 	res: Response,
 	next: NextFunction,
