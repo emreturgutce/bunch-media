@@ -36,6 +36,9 @@ interface IUserModel extends mongoose.Model<IUserDocument> {
 	): Promise<IUserDocument | null>;
 }
 
+const userRoles = ['USER', 'ADMIN'];
+const platforms = ['YOUTUBE', 'TWITTER'];
+
 const schema = new mongoose.Schema<IUserDocument, IUserModel>(
 	{
 		email: {
@@ -55,6 +58,23 @@ const schema = new mongoose.Schema<IUserDocument, IUserModel>(
 			type: String,
 			required: false,
 		},
+		verified: {
+			type: Boolean,
+			default: false,
+			required: true,
+		},
+		role: {
+			type: String,
+			default: 'USER',
+			enum: userRoles,
+			required: true,
+		},
+		platforms: [
+			{
+				type: String,
+				enum: platforms,
+			},
+		],
 	},
 	{
 		toJSON: {
