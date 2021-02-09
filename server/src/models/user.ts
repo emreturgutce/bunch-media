@@ -30,6 +30,10 @@ export interface IUserAttributes {
 
 interface IUserModel extends mongoose.Model<IUserDocument> {
 	build(attributes: IUserAttributes): IUserDocument;
+	findByEmailAndPassword(
+		email: string,
+		password: string,
+	): Promise<IUserDocument | null>;
 }
 
 const schema = new mongoose.Schema<IUserDocument, IUserModel>(
@@ -73,6 +77,20 @@ const schema = new mongoose.Schema<IUserDocument, IUserModel>(
 });
 
 schema.statics.build = (attributes: IUserAttributes) => new User(attributes);
+schema.statics.findByEmailAndPassword = async (
+	email: string,
+	password: string,
+) => {
+	const user = await User.findOne({
+		email,
+	});
+
+	if (user && (await bcrypt.compare(password, user.password))) {
+		return user;
+	}
+
+	return null;
+};
 
 const User = mongoose.model<IUserDocument, IUserModel>('User', schema);
 
