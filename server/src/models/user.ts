@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 import { JSONSchemaType } from 'ajv';
 
 export const userSchema: JSONSchemaType<IUserAttributes> = {
@@ -61,10 +62,17 @@ const schema = new mongoose.Schema<IUserDocument, IUserModel>(
 			},
 		},
 	},
-);
+).pre('save', async function (done) {
+	if (this.isModified('password')) {
+		const hashedPassword = await bcrypt.hash(this.get('password'), 10);
 
-schema.statics.build = (attributes: IUserAttributes) =>
-	new User(attributes);
+		this.set('password', hashedPassword);
+	}
+
+	done();
+});
+
+schema.statics.build = (attributes: IUserAttributes) => new User(attributes);
 
 const User = mongoose.model<IUserDocument, IUserModel>('User', schema);
 
