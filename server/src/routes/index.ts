@@ -1,7 +1,9 @@
 import { Router } from 'express';
 import { createUserController } from '../controllers/create-user';
 import { getUsersController } from '../controllers/get-users';
-import { loginUser } from '../controllers/login-user';
+import { loginUserController } from '../controllers/login-user';
+import { logoutUserController } from '../controllers/logout-user';
+import { auth } from '../middlewares/auth';
 import { errorHandler } from '../middlewares/error-handler';
 import { notFound } from '../middlewares/not-found';
 import { validateLogin } from '../middlewares/validate-login';
@@ -9,9 +11,10 @@ import { validateUser } from '../middlewares/validate-user';
 
 const router = Router();
 
-router.get('/', getUsersController);
-router.post('/', validateUser, createUserController);
-router.post('/login', validateLogin, loginUser);
+router.get('/api/users', auth, getUsersController);
+router.post('/api/signup', validateUser, createUserController);
+router.post('/api/login', validateLogin, loginUserController);
+router.get('/api/logout', auth, logoutUserController);
 
 router.use(notFound);
 router.use(errorHandler);
