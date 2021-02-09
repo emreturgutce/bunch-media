@@ -11,22 +11,20 @@ export const cookieOptions: CookieOptions = {
 	sameSite: isProd ? 'none' : 'strict',
 	secure: isProd,
 	httpOnly: true,
-	signed: true,
+	maxAge: COOKIE_EXPIRATION,
 };
 
 function sessionConfig() {
 	return session({
 		store: new RedisStore({
 			client: RedisClient.getInstance(),
+			prefix: 'session:',
 		}),
 		name: COOKIE_NAME,
 		secret: SESSION_SECRET,
 		resave: false,
 		saveUninitialized: false,
-		cookie: {
-			...cookieOptions,
-			maxAge: COOKIE_EXPIRATION,
-		},
+		cookie: cookieOptions,
 	});
 }
 
