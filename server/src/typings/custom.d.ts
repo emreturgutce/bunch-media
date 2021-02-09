@@ -1,5 +1,5 @@
 declare module 'express-session' {
-	interface Session {
+	interface SessionData {
 		context: {
 			id: string;
 		};
@@ -24,7 +24,7 @@ declare global {
 		sameSite: boolean | 'none' | 'strict' | 'lax' | undefined;
 		secure: boolean;
 		httpOnly: boolean;
-		signed: boolean;
+		maxAge: number;
 	}
 }
 
