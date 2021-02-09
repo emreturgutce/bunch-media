@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 import { User } from '../models/user';
+import { JWT_SECRET } from '../config';
 
 export async function loginUser(
 	req: Request,
@@ -17,6 +19,8 @@ export async function loginUser(
 				new createHttpError.BadRequest('Email or password wrong.'),
 			);
 		}
+
+		req.session.context = { id: jwt.sign(user.id, JWT_SECRET) };
 
 		res.status(204).send();
 	} catch (error) {
