@@ -18,7 +18,7 @@ services:
             context: server
             dockerfile: dockerfile
         restart: on-failure
-                volumes:
+        volumes:
             - ./server:/app
             - /app/node_modules
         env_file: server/.env.local

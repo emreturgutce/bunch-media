@@ -1,7 +1,10 @@
 {
 	"repository": "git@github.com:emreturgutce/bunch-media.git",
-    "author": "emreturgutce <emrebursalee@gmail.com>",
+	"author": "emreturgutce <emrebursalee@gmail.com>",
 	"license": "MIT",
 	"private": true,
-	"workspaces": ["server", "client"]
-  }
+	"workspaces": [
+		"server",
+		"client"
+	]
+}
