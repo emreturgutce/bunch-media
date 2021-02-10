@@ -17,10 +17,13 @@ import { validateUser } from '../middlewares/validate-user';
 import { addPlatformController } from '../controllers/add-platform';
 import { validateAddPlatform } from '../middlewares/validate-add-flatform';
 import { getPlatformsController } from '../controllers/get-platforms';
+import { updateUserController } from '../controllers/update-user';
+import { validateUpdateUser } from '../middlewares/validate-update-user';
 
 const router = Router();
 
 router.get('/api/users', auth, getUsersController);
+router.put('/api/users', auth, validateUpdateUser, updateUserController)
 router.post('/api/signup', validateUser, createUserController);
 router.post('/api/login', validateLogin, loginUserController);
 router.get('/api/logout', auth, logoutUserController);
