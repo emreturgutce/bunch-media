@@ -1,20 +1,33 @@
 version: '3'
 services:
-  app:
-    build: .
-    restart: on-failure
-    ports:
-      - 9229:9229
-      - 8080:8080
-    volumes: 
-      - .:/app
-    env_file: server/.env.local
-  mongo:
-    image: mongo:4.4.3-bionic
-    restart: on-failure
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: user
-      MONGO_INITDB_ROOT_PASSWORD: password 
-  redis:
-    image: redis:6.0.10-alpine
-    restart: on-failure
+    client:
+        ports:
+            - 3000:3000
+        build:
+            context: client
+            dockerfile: dockerfile
+        volumes:
+            - ./client:/app
+            - /app/node_modules
+            - /app/.next
+    app:
+        ports:
+            - 9229:9229
+            - 8080:8080
+        build:
+            context: server
+            dockerfile: dockerfile
+        restart: on-failure
+                volumes:
+            - ./server:/app
+            - /app/node_modules
+        env_file: server/.env.local
+    mongo:
+        image: mongo:4.4.3-bionic
+        restart: on-failure
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: user
+            MONGO_INITDB_ROOT_PASSWORD: password
+    redis:
+        image: redis:6.0.10-alpine
+        restart: on-failure
