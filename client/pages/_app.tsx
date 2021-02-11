@@ -1,3 +1,4 @@
+import 'tailwindcss/tailwind.css';
 import App from 'next/app';
 import { Provider } from 'react-redux';
 import { createWrapper } from 'next-redux-wrapper';
